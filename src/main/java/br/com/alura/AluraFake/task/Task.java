@@ -1,67 +1,38 @@
 package br.com.alura.AluraFake.task;
 
-import br.com.alura.AluraFake.course.Status;
-import br.com.alura.AluraFake.user.User;
+import br.com.alura.AluraFake.course.Course;
+import br.com.alura.AluraFake.taskoption.TaskOption;
 import jakarta.persistence.*;
-import org.springframework.util.Assert;
+import lombok.*;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
+@Builder
 public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime createdAt = LocalDateTime.now();
-    private String title;
-    private String description;
-    @ManyToOne
-    private User instructor;
+
+    private String statement;
+
+    @Column(name = "order_value")
+    private Integer orderValue;
+
     @Enumerated(EnumType.STRING)
-    private Status status;
-    private LocalDateTime publishedAt;
+    private Type type;
 
-    @Deprecated
-    public Task(){}
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "course_id")
+    private Course course;
 
-    public Task(String title, String description, User instructor) {
-        Assert.isTrue(instructor.isInstructor(), "Usuario deve ser um instrutor");
-        this.title = title;
-        this.instructor = instructor;
-        this.description = description;
-        this.status = Status.BUILDING;
-    }
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TaskOption> taskOptions = new ArrayList<>();
 
-    public Long getId() {
-        return id;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public User getInstructor() {
-        return instructor;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public LocalDateTime getPublishedAt() {
-        return publishedAt;
-    }
 }

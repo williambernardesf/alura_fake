@@ -68,17 +68,17 @@ curl -w "%{http_code}\n" -X POST http://localhost:8080/task/new/singlechoice \
         "courseId": 42,
         "statement": "O que aprendemos hoje?",
         "order": 2,
-        "options": [
+        "taskOptions": [
             {
-                "option": "Java",
+                "taskOption": "Java",
                 "isCorrect": true
             },
             {
-                "option": "Python",
+                "taskOption": "Python",
                 "isCorrect": false
             },
             {
-                "option": "Ruby",
+                "taskOption": "Ruby",
                 "isCorrect": false
             }
         ]
@@ -102,17 +102,17 @@ curl -w "%{http_code}\n" -X POST http://localhost:8080/task/new/singlechoice \
         "courseId": 42,
         "statement": "O que aprendemos hoje?",
         "order": 2,
-        "options": [
+        "taskOptions": [
             {
-                "option": "Java",
+                "taskOption": "Java",
                 "isCorrect": true
             },
             {
-                "option": "Spring",
+                "taskOption": "Spring",
                 "isCorrect": true
             },
             {
-                "option": "Ruby",
+                "taskOption": "Ruby",
                 "isCorrect": false
             }
         ]
