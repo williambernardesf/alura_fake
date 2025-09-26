@@ -12,7 +12,7 @@ public class UserDummyFactory {
         User user = new User();
         user.setId(1L);
         user.setName("Paulo");
-        user.setEmail("paulo@alura.com.br");
+        user.setEmail("pauloo@alura.com.br");
         user.setRole(Role.INSTRUCTOR);
         user.setPassword("dummyPassword");
         user.setCreatedAt(LocalDateTime.now());
