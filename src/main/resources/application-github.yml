@@ -4,6 +4,7 @@ spring:
     username: postgres
     password: postgres
   jpa:
+    hibernate.jdbc.lob.non_contextual_creation: true
     hibernate:
       ddl-auto: update
   flyway:
