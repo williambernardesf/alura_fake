@@ -1,8 +1,10 @@
 package br.com.alura.AluraFake.infra;
 
 import br.com.alura.AluraFake.domain.entity.course.Course;
+import br.com.alura.AluraFake.domain.entity.user.User;
+import br.com.alura.AluraFake.domain.enums.Role;
 import br.com.alura.AluraFake.persistence.repository.CourseRepository;
-import br.com.alura.AluraFake.user.*;
+import br.com.alura.AluraFake.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

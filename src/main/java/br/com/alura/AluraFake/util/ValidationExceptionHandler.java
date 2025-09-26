@@ -8,12 +8,12 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @ControllerAdvice
 public class ValidationExceptionHandler {
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<List<ErrorItemDTO>> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -40,6 +40,12 @@ public class ValidationExceptionHandler {
     public ResponseEntity<ErrorItemDTO> handleOptionsData(IllegalArgumentException ex) {
         ErrorItemDTO error = new ErrorItemDTO("options", ex.getMessage());
         return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<List<ErrorItemDTO>> handleResponseStatusException(ResponseStatusException ex) {
+        List<ErrorItemDTO> errors = List.of(new ErrorItemDTO("data", ex.getMostSpecificCause().getMessage()));
+        return ResponseEntity.badRequest().body(errors);
     }
 
 }

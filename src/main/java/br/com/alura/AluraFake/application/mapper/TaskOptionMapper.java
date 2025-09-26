@@ -2,7 +2,7 @@ package br.com.alura.AluraFake.application.mapper;
 
 import br.com.alura.AluraFake.api.rest.dto.request.taskoption.CreateTaskOptionGenericDTO;
 import br.com.alura.AluraFake.domain.entity.taskoption.TaskOption;
-import br.com.alura.AluraFake.taskoption.TaskOptionResponseDTO;
+import br.com.alura.AluraFake.api.rest.dto.response.taskoption.TaskOptionResponseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
