@@ -15,14 +15,9 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          java-version: 21
           distribution: temurin
-
-      - name: Setup Maven
-        uses: actions/setup-maven@v3
-        with:
           java-version: 21
-          maven-version: 3.8.2
+          cache: maven  # opcional, habilita cache do Maven
 
       - name: Run all tests
         run: mvn clean install
