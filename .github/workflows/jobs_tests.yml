@@ -1,0 +1,28 @@
+name: jobs-tests
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  run-all-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 21
+          distribution: 'temurin'
+
+      - name: Set up Maven
+        uses: actions/setup-maven@v3
+        with:
+          java-version: 21
+          maven-version: 3.8.2
+
+      - name: Run all tests
+        run: mvn clean install
