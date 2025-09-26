@@ -13,7 +13,7 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DataJpaTest
-@ActiveProfiles("test")
+@ActiveProfiles("github")
 class UserRepositoryTest {
 
     @Autowired

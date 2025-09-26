@@ -20,7 +20,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@ActiveProfiles("test")
+@ActiveProfiles("github")
 class TaskRepositoryTest {
 
     @Autowired

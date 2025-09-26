@@ -3,9 +3,9 @@ package br.com.alura.AluraFake.persistence.repository.course;
 import br.com.alura.AluraFake.domain.entity.course.Course;
 import br.com.alura.AluraFake.domain.entity.user.User;
 import br.com.alura.AluraFake.domain.enums.Status;
+import br.com.alura.AluraFake.dummies.UserDummyFactory;
 import br.com.alura.AluraFake.persistence.repository.CourseRepository;
 import br.com.alura.AluraFake.persistence.repository.UserRepository;
-import br.com.alura.AluraFake.dummies.UserDummyFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@ActiveProfiles("test")
+@ActiveProfiles("github")
 class CourseRepositoryTest {
 
     @Autowired
