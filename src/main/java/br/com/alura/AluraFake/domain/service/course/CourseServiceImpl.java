@@ -2,12 +2,14 @@ package br.com.alura.AluraFake.domain.service.course;
 
 import br.com.alura.AluraFake.api.rest.dto.request.course.NewCourseDTO;
 import br.com.alura.AluraFake.api.rest.dto.response.course.CourseListItemDTO;
+import br.com.alura.AluraFake.api.rest.dto.response.course.InstructorCoursesResponse;
 import br.com.alura.AluraFake.application.mapper.CourseMapper;
 import br.com.alura.AluraFake.domain.entity.course.Course;
+import br.com.alura.AluraFake.domain.entity.user.User;
 import br.com.alura.AluraFake.domain.enums.Status;
+import br.com.alura.AluraFake.domain.service.user.UserService;
 import br.com.alura.AluraFake.persistence.repository.CourseRepository;
-import br.com.alura.AluraFake.user.User;
-import br.com.alura.AluraFake.user.UserRepository;
+import br.com.alura.AluraFake.persistence.repository.UserRepository;
 import br.com.alura.AluraFake.util.ErrorItemDTO;
 import br.com.alura.AluraFake.util.validation.CourseValidator;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -27,6 +28,7 @@ public class CourseServiceImpl implements CourseService{
     private final CourseMapper courseMapper;
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @Override
     public ResponseEntity createCourse(NewCourseDTO newCourse){
@@ -47,17 +49,26 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public ResponseEntity createCourseAll(){
-        List<CourseListItemDTO> courses = courseRepository.findAll().stream()
-                .map(courseMapper::toCourseListItemDTO)
+    public InstructorCoursesResponse getCoursesByInstructor(Long instructorId){
+        var user = userService.getUserById(instructorId);
+
+        var courses = courseRepository.findByInstructorId(instructorId);
+
+        var courseDTOs = courses.stream()
+                .map(courseMapper::toInstructorCourseDTO)
                 .toList();
-        return ResponseEntity.ok(courses);
+
+        long totalPublished = courses.stream()
+                .filter(course -> "PUBLISHED".equalsIgnoreCase(course.getStatus().name()))
+                .count();
+
+        return courseMapper.toInstructorCoursesResponse(user, courseDTOs, totalPublished);
 
     }
 
     @Override
-    public CourseListItemDTO publishCourse(Long id) {
-        var course = getCourseById(id);
+    public CourseListItemDTO publishCourse(Long courseId) {
+        var course = getCourseById(courseId);
 
         courseValidator.validateForPublish(course.getTasks(), course.getStatus());
 

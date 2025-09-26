@@ -2,14 +2,13 @@ package br.com.alura.AluraFake.api.rest.controller;
 
 import br.com.alura.AluraFake.api.rest.dto.request.course.NewCourseDTO;
 import br.com.alura.AluraFake.api.rest.dto.response.course.CourseListItemDTO;
+import br.com.alura.AluraFake.api.rest.dto.response.course.InstructorCoursesResponse;
 import br.com.alura.AluraFake.application.facade.course.CourseFacade;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,9 +22,9 @@ public class CourseController {
         return courseFacade.createCourse(newCourse);
     }
 
-    @GetMapping("/course/all")
-    public ResponseEntity<List<CourseListItemDTO>> createCourseAll() {
-        return ResponseEntity.ok(courseFacade.createCourseAll());
+    @GetMapping("/instructor/{id}/courses")
+    public ResponseEntity<InstructorCoursesResponse> getCoursesByInstructor(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(courseFacade.getCoursesByInstructor(id));
     }
 
     @PostMapping("/course/{id}/publish")

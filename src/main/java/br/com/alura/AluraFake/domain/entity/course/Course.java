@@ -2,7 +2,7 @@ package br.com.alura.AluraFake.domain.entity.course;
 
 import br.com.alura.AluraFake.domain.entity.task.Task;
 import br.com.alura.AluraFake.domain.enums.Status;
-import br.com.alura.AluraFake.user.User;
+import br.com.alura.AluraFake.domain.entity.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

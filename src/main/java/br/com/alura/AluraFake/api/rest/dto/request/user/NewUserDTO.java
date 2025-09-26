@@ -1,5 +1,7 @@
-package br.com.alura.AluraFake.user;
+package br.com.alura.AluraFake.api.rest.dto.request.user;
 
+import br.com.alura.AluraFake.domain.entity.user.User;
+import br.com.alura.AluraFake.domain.enums.Role;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.Length;
 

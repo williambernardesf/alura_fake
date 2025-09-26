@@ -1,6 +1,6 @@
 package br.com.alura.AluraFake.api.rest.dto.response.task;
 
-import br.com.alura.AluraFake.taskoption.TaskOptionResponseDTO;
+import br.com.alura.AluraFake.api.rest.dto.response.taskoption.TaskOptionResponseDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 

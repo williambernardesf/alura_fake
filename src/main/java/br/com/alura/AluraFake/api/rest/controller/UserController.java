@@ -1,5 +1,9 @@
-package br.com.alura.AluraFake.user;
+package br.com.alura.AluraFake.api.rest.controller;
 
+import br.com.alura.AluraFake.api.rest.dto.request.user.NewUserDTO;
+import br.com.alura.AluraFake.domain.entity.user.User;
+import br.com.alura.AluraFake.persistence.repository.UserRepository;
+import br.com.alura.AluraFake.api.rest.dto.response.user.UserListItemDTO;
 import br.com.alura.AluraFake.util.ErrorItemDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.*;
@@ -31,7 +35,7 @@ public class UserController {
 
     @GetMapping("/user/all")
     public List<UserListItemDTO> listAllUsers() {
-        return userRepository.findAll().stream().map(UserListItemDTO::new).toList();
+        return null;
     }
 
 }
