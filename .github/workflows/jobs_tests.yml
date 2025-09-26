@@ -19,7 +19,7 @@ jobs:
           distribution: temurin
 
       - name: Setup Maven
-        uses: actions/setup-maven@v3
+        uses: apache/setup-maven@v1
         with:
           java-version: 21
           maven-version: 3.8.2

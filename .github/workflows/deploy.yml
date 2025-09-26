@@ -20,7 +20,7 @@ jobs:
           distribution: temurin
 
       - name: Setup Maven
-        uses: actions/setup-maven@v3
+        uses: apache/setup-maven@v1
         with:
           java-version: 21
           maven-version: 3.8.2
@@ -32,7 +32,7 @@ jobs:
         run: cp target/alura_fake-1.0-SNAPSHOT.jar alura_fake-${{ github.sha }}.jar
 
       - name: Save the artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: alura_fake
           path: alura_fake-${{ github.sha }}.jar
@@ -42,7 +42,7 @@ jobs:
     needs: run-unit-tests
     steps:
       - name: Get the artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: alura_fake
 
