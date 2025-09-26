@@ -10,15 +10,11 @@ import br.com.alura.AluraFake.domain.enums.Status;
 import br.com.alura.AluraFake.domain.service.user.UserService;
 import br.com.alura.AluraFake.persistence.repository.CourseRepository;
 import br.com.alura.AluraFake.persistence.repository.UserRepository;
-import br.com.alura.AluraFake.util.ErrorItemDTO;
 import br.com.alura.AluraFake.util.validation.CourseValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -31,21 +27,16 @@ public class CourseServiceImpl implements CourseService{
     private final UserService userService;
 
     @Override
-    public ResponseEntity createCourse(NewCourseDTO newCourse){
-        Optional<User> possibleAuthor = userRepository
-                .findByEmail(newCourse.getEmailInstructor())
-                .filter(User::isInstructor);
+    public CourseListItemDTO createCourse(NewCourseDTO newCourse){
+        User possibleAuthor = userRepository.findByEmail(newCourse.getEmailInstructor())
+                .filter(User::isInstructor)
+                .orElseThrow(() -> new IllegalArgumentException("User is not a instructor"));
 
-        if(possibleAuthor.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorItemDTO("emailInstructor", "Usuário não é um instrutor"));
-        }
-
-        Course course = new Course(newCourse.getTitle(), newCourse.getDescription(), possibleAuthor.get());
+        Course course = new Course(newCourse.getTitle(), newCourse.getDescription(), possibleAuthor);
 
         var savedCourse = courseRepository.save(course);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return courseMapper.toCourseListItemDTO(savedCourse);
     }
 
     @Override

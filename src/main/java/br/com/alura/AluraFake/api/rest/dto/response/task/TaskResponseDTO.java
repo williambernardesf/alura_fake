@@ -6,11 +6,9 @@ import lombok.*;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class TaskResponseDTO {
     private String statement;

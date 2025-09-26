@@ -6,6 +6,7 @@ import br.com.alura.AluraFake.api.rest.dto.response.course.InstructorCoursesResp
 import br.com.alura.AluraFake.application.facade.course.CourseFacade;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,9 @@ public class CourseController {
 
     @Transactional
     @PostMapping("/course/new")
-    public ResponseEntity createCourse(@Valid @RequestBody NewCourseDTO newCourse) {
-        return courseFacade.createCourse(newCourse);
+    public ResponseEntity<CourseListItemDTO> createCourse(@Valid @RequestBody NewCourseDTO newCourse) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(courseFacade.createCourse(newCourse));
     }
 
     @GetMapping("/instructor/{id}/courses")

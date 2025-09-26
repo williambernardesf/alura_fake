@@ -4,7 +4,7 @@ import br.com.alura.AluraFake.api.rest.dto.request.task.CreateTaskMultipleChoice
 import br.com.alura.AluraFake.api.rest.dto.request.task.CreateTaskNewTextDTO;
 import br.com.alura.AluraFake.api.rest.dto.request.task.CreateTaskSingleChoiceDTO;
 import br.com.alura.AluraFake.api.rest.dto.response.task.TaskResponseDTO;
-import br.com.alura.AluraFake.application.facade.TaskFacade;
+import br.com.alura.AluraFake.application.facade.task.TaskFacade;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,9 +1,8 @@
-package br.com.alura.AluraFake.user;
+package br.com.alura.AluraFake.persistence.repository.user;
 
 import br.com.alura.AluraFake.domain.entity.user.User;
 import br.com.alura.AluraFake.domain.enums.Role;
 import br.com.alura.AluraFake.persistence.repository.UserRepository;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -15,7 +14,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DataJpaTest
 @ActiveProfiles("test")
-@Disabled
 class UserRepositoryTest {
 
     @Autowired

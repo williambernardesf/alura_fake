@@ -1,4 +1,4 @@
-package br.com.alura.AluraFake.application.facade;
+package br.com.alura.AluraFake.application.facade.task;
 
 import br.com.alura.AluraFake.api.rest.dto.request.task.CreateTaskMultipleChoiceDTO;
 import br.com.alura.AluraFake.api.rest.dto.request.task.CreateTaskNewTextDTO;

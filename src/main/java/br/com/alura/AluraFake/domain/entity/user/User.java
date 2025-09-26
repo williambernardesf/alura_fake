@@ -4,12 +4,14 @@ import br.com.alura.AluraFake.domain.enums.Role;
 import br.com.alura.AluraFake.util.PasswordGeneration;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 public class User {
 
@@ -23,9 +25,6 @@ public class User {
     private String email;
 
     private String password;
-
-    @Deprecated
-    public User() {}
 
     public User(String name, String email, Role role, String password) {
         this.name = name;

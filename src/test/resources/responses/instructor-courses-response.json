@@ -1,0 +1,14 @@
+{
+  "instructorId": 1,
+  "instructorName": "Paulo",
+  "courses": [
+    {
+      "id": 1,
+      "title": "Java Completo",
+      "status": "PUBLISHED",
+      "publishedAt": "2025-01-01T10:00:00",
+      "activitiesCount": 2
+    }
+  ],
+  "totalPublishedCourses": 1
+}

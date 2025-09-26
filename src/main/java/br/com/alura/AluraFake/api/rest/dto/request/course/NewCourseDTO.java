@@ -3,8 +3,12 @@ package br.com.alura.AluraFake.api.rest.dto.request.course;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
+@Data
+@Builder
 public class NewCourseDTO {
 
     @NotNull
@@ -18,30 +22,4 @@ public class NewCourseDTO {
     @NotBlank
     @Email
     private String emailInstructor;
-
-    public NewCourseDTO() {}
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getEmailInstructor() {
-        return emailInstructor;
-    }
-
-    public void setEmailInstructor(String emailInstructor) {
-        this.emailInstructor = emailInstructor;
-    }
 }

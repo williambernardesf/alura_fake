@@ -1,14 +1,13 @@
 package br.com.alura.AluraFake.api.rest.dto.response.course;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
-@Getter
-@Setter
+
 @Data
+@Builder
 @AllArgsConstructor
 public class InstructorCoursesResponse {
     private Long instructorId;

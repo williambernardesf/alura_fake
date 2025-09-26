@@ -1,18 +1,14 @@
 package br.com.alura.AluraFake.api.rest.dto.request.task;
 
-import br.com.alura.AluraFake.domain.enums.Type;
 import br.com.alura.AluraFake.api.rest.dto.request.taskoption.CreateTaskOptionGenericDTO;
+import br.com.alura.AluraFake.domain.enums.Type;
+import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 
 @Data
-@NoArgsConstructor
-@Getter
-@Setter
+@Builder
 public class CreateTaskDTO {
 
     private String statement;

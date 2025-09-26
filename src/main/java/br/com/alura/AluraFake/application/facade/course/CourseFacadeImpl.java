@@ -5,7 +5,6 @@ import br.com.alura.AluraFake.api.rest.dto.response.course.CourseListItemDTO;
 import br.com.alura.AluraFake.api.rest.dto.response.course.InstructorCoursesResponse;
 import br.com.alura.AluraFake.domain.service.course.CourseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,7 +14,7 @@ public class CourseFacadeImpl implements CourseFacade {
     private final CourseService courseService;
 
     @Override
-    public ResponseEntity createCourse(NewCourseDTO newCourse){
+    public CourseListItemDTO createCourse(NewCourseDTO newCourse){
         return courseService.createCourse(newCourse);
     }
 
