@@ -16,9 +16,9 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 21
-          distribution: 'temurin'
+          distribution: temurin
 
-      - name: Set up Maven
+      - name: Setup Maven
         uses: actions/setup-maven@v3
         with:
           java-version: 21
