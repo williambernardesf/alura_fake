@@ -71,7 +71,7 @@ jobs:
           name: alura_fake
 
       - name: Move artifact to root
-        run: mv alura_fake/alura_fake-*.jar .
+        run: mv alura_fake/* .
 
       - name: Fake deploy
         run: |
