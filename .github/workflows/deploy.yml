@@ -70,12 +70,12 @@ jobs:
         with:
           name: alura_fake
 
-      - name: Verificar conteúdo
+      - name: Verificar conteúdo após download
         run: |
           echo "Conteúdo após download:"
-          ls -lh alura_fake
+          ls -lh
 
       - name: Fake deploy
         run: |
           echo "Listando artefato para deploy:"
-          ls -lh alura_fake/*.jar
+          ls -lh alura_fake-*.jar
