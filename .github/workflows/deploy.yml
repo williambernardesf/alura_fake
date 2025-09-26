@@ -9,6 +9,26 @@ on:
 jobs:
   run-unit-tests:
     runs-on: ubuntu-latest
+    env:
+      SPRING_PROFILES_ACTIVE: github
+      POSTGRES_DB: alurafake
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    services:
+      postgres:
+        image: postgres:15
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: alurafake
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -19,6 +39,15 @@ jobs:
           distribution: temurin
           java-version: 21
           cache: maven
+
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          echo "Waiting for PostgreSQL..."
+          for i in {1..30}; do
+            nc -z localhost 5432 && echo "PostgreSQL is up!" && break
+            echo "Waiting..."
+            sleep 2
+          done
 
       - name: Unit Tests
         run: mvn clean package
@@ -41,5 +70,10 @@ jobs:
         with:
           name: alura_fake
 
+      - name: Move artifact to root
+        run: mv alura_fake/alura_fake-*.jar .
+
       - name: Fake deploy
-        run: ls alura_fake-*.jar
+        run: |
+          echo "Listando artefato para deploy:"
+          ls alura_fake-*.jar
