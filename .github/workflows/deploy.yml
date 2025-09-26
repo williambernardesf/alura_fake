@@ -70,18 +70,12 @@ jobs:
         with:
           name: alura_fake
 
-      - name: Verificar conteúdo após download
+      - name: Verificar conteúdo
         run: |
-          echo "Conteúdo do workspace:"
-          ls -R
-
-      - name: Mover artefato para raiz
-        run: |
-          JAR_PATH=$(find . -name "alura_fake-*.jar" | head -n 1)
-          echo "Arquivo encontrado: $JAR_PATH"
-          mv "$JAR_PATH" .
+          echo "Conteúdo após download:"
+          ls -lh alura_fake
 
       - name: Fake deploy
         run: |
           echo "Listando artefato para deploy:"
-          ls -lh alura_fake-*.jar
+          ls -lh alura_fake/*.jar
