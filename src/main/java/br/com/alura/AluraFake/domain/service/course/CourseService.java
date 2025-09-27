@@ -6,7 +6,6 @@ import br.com.alura.AluraFake.api.rest.dto.response.course.InstructorCoursesResp
 
 public interface CourseService {
 
-
     CourseListItemDTO createCourse(NewCourseDTO newCourse);
 
     InstructorCoursesResponse getCoursesByInstructor(Long instructorId);

@@ -13,6 +13,12 @@ import java.util.List;
 
 public class CourseDummyFactory {
 
+    public static Course courseWithCourseId(){
+        Course course1 = new Course();
+        course1.setId(1L);
+        return course1;
+    }
+
     public static Course course(){
         Course course1 = new Course();
         course1.setTitle("Java Completo");
