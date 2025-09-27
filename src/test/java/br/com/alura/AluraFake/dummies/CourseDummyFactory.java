@@ -28,6 +28,16 @@ public class CourseDummyFactory {
         return course1;
     }
 
+    public static Course courseWithTask(){
+        Course course1 = new Course();
+        course1.setTitle("Java Essentials");
+        course1.setDescription("Curso de Java do básico ao avançado");
+        course1.setStatus(Status.BUILDING);
+        course1.setInstructor(UserDummyFactory.instructor());
+        course1.setTasks(List.of(TaskDummyFactory.taskEntity(1)));
+        return course1;
+    }
+
     public static Course course2(){
         Course course2 = new Course();
         course2.setTitle("Spring Boot");
@@ -58,6 +68,16 @@ public class CourseDummyFactory {
         return InstructorCourseDTO.builder()
                 .id(1L)
                 .title("Java Completo")
+                .status(Status.PUBLISHED.toString())
+                .publishedAt(LocalDateTime.of(2025, 1, 1, 10, 0))
+                .activitiesCount(2)
+                .build();
+    }
+
+    public static InstructorCourseDTO instructorCourseDTO2() {
+        return InstructorCourseDTO.builder()
+                .id(2L)
+                .title("Java Básico")
                 .status(Status.PUBLISHED.toString())
                 .publishedAt(LocalDateTime.of(2025, 1, 1, 10, 0))
                 .activitiesCount(2)

@@ -10,6 +10,7 @@ import br.com.alura.AluraFake.api.rest.dto.response.task.TaskResponseDTO;
 import br.com.alura.AluraFake.api.rest.dto.response.taskoption.TaskOptionResponseDTO;
 import br.com.alura.AluraFake.domain.entity.course.Course;
 import br.com.alura.AluraFake.domain.entity.task.Task;
+import br.com.alura.AluraFake.domain.entity.taskoption.TaskOption;
 import br.com.alura.AluraFake.domain.enums.Status;
 import br.com.alura.AluraFake.domain.enums.Type;
 
@@ -146,7 +147,7 @@ public class TaskDummyFactory {
                 .build();
     }
 
-    private static CreateTaskOptionGenericDTO createOptionGeneric(String text, boolean isCorrect) {
+    public static CreateTaskOptionGenericDTO createOptionGeneric(String text, boolean isCorrect) {
         CreateTaskOptionGenericDTO option = new CreateTaskOptionGenericDTO();
         option.setTaskOption(text);
         option.setIsCorrect(isCorrect);
@@ -169,5 +170,12 @@ public class TaskDummyFactory {
         task.setOrderValue(orderValue);
         task.setCourse(dummyCourse());
         return task;
+    }
+
+    public static TaskOption taskOption(){
+        TaskOption entity = new TaskOption();
+        entity.setOption("Opção B");
+        entity.setIsCorrect(false);
+        return entity;
     }
 }

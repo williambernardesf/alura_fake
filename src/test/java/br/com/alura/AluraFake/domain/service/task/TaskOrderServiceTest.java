@@ -57,7 +57,7 @@ class TaskOrderServiceTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
                 () -> taskOrderService.validateAndShiftTasks(1L, 3));
 
-        assertEquals("A sequência da ordem está incorreta. Próxima ordem válida é 2", exception.getMessage());
+        assertEquals("Invalid order sequence. Next valid position is 2", exception.getMessage());
         verify(taskRepository, never()).saveAll(any());
     }
 
@@ -77,10 +77,17 @@ class TaskOrderServiceTest {
 
         taskOrderService.validateAndShiftTasks(1L, 2);
 
-        assertEquals(1, t1.getOrderValue());
-        assertEquals(3, t2.getOrderValue());
-        assertEquals(4, t3.getOrderValue());
+        assertEquals(1, t1.getOrderValue()); // unchanged
+        assertEquals(3, t2.getOrderValue()); // shifted
+        assertEquals(4, t3.getOrderValue()); // shifted
 
-        verify(taskRepository).saveAll(tasks);
+        ArgumentCaptor<List<Task>> captor = ArgumentCaptor.forClass(List.class);
+        verify(taskRepository).saveAll(captor.capture());
+
+        List<Task> savedTasks = captor.getValue();
+        assertEquals(2, savedTasks.size());
+        assertTrue(savedTasks.contains(t2));
+        assertTrue(savedTasks.contains(t3));
     }
+
 }
