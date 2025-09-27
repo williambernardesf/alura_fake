@@ -30,7 +30,7 @@ class TaskFacadeImplTest {
     @Test
     void createOpenTextExercise_should_delegate_to_service() {
         CreateTaskNewTextDTO dto = TaskDummyFactory.createOpenTextTask();
-        TaskResponseDTO response = TaskDummyFactory.taskResponseDTO();
+        TaskResponseDTO response = TaskDummyFactory.taskResponseDTOOpenText();
 
         CreateTaskDTO taskDTO = TaskDummyFactory.createOpenTextTaskGeneric();
 

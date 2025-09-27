@@ -1,9 +1,10 @@
 package br.com.alura.AluraFake.domain.service.user;
 
+import br.com.alura.AluraFake.api.rest.dto.request.user.NewUserDTO;
 import br.com.alura.AluraFake.api.rest.dto.response.user.UserListItemDTO;
 import br.com.alura.AluraFake.application.mapper.UserMapper;
-import br.com.alura.AluraFake.dummies.UserDummyFactory;
 import br.com.alura.AluraFake.domain.entity.user.User;
+import br.com.alura.AluraFake.dummies.UserDummyFactory;
 import br.com.alura.AluraFake.persistence.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,8 +15,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
@@ -28,6 +30,37 @@ class UserServiceImplTest {
 
     @InjectMocks
     private UserServiceImpl userService;
+
+    @Test
+    void newStudent__should_create_user_when_email_not_registered() {
+        NewUserDTO newUserDTO = UserDummyFactory.newUserDTO();
+        User userEntity = UserDummyFactory.instructor();
+        User savedUser = UserDummyFactory.instructor();
+        UserListItemDTO expectedResponse = UserDummyFactory.instructorDto();
+
+        when(userRepository.existsByEmail(newUserDTO.getEmail())).thenReturn(false);
+        when(userMapper.toUser(newUserDTO)).thenReturn(userEntity);
+        when(userRepository.save(userEntity)).thenReturn(savedUser);
+        when(userMapper.toUserListItemDto(savedUser)).thenReturn(expectedResponse);
+
+        UserListItemDTO result = userService.newStudent(newUserDTO);
+
+        assertEquals(expectedResponse.getId(), result.getId());
+        assertEquals(expectedResponse.getName(), result.getName());
+        assertEquals(expectedResponse.getEmail(), result.getEmail());
+    }
+
+    @Test
+    void newStudent__should_throw_exception_when_email_already_registered() {
+        NewUserDTO newUserDTO = UserDummyFactory.newUserDTO();
+        when(userRepository.existsByEmail(newUserDTO.getEmail())).thenReturn(true);
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> userService.newStudent(newUserDTO));
+
+        assertEquals("Email já cadastrado no sistema", exception.getMessage());
+    }
+
 
     @Test
     void getUserById_should_return_userListItemDTO_if_user_is_instructor() {

@@ -48,4 +48,11 @@ public class ValidationExceptionHandler {
         return ResponseEntity.badRequest().body(errors);
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorItemDTO> handleRuntimeException(RuntimeException ex) {
+        ErrorItemDTO error = new ErrorItemDTO("data", ex.getMessage());
+        return ResponseEntity.badRequest().body(error);
+    }
+
 }

@@ -17,6 +17,10 @@ import java.util.List;
 
 public class TaskDummyFactory {
 
+    public static Task emptyTask(){
+        return new Task();
+    }
+
     public static CreateTaskNewTextDTO createOpenTextTask() {
         return CreateTaskNewTextDTO.builder()
                 .statement("Escreva sobre programação orientada a objetos")
@@ -71,6 +75,29 @@ public class TaskDummyFactory {
                         createOptionResponse("Opção 1", false),
                         createOptionResponse("Opção 2", true),
                         createOptionResponse("Opção 3", false)
+                ))
+                .build();
+    }
+
+    public static TaskResponseDTO taskResponseDTOOpenText() {
+        return TaskResponseDTO.builder()
+                .statement("Conta como foi sua experiencia")
+                .orderValue(1)
+                .courseId(53L)
+                .type(Type.OPEN_TEXT.name())
+                .build();
+    }
+
+    public static TaskResponseDTO taskResponseDTOMultipleChoice() {
+        return TaskResponseDTO.builder()
+                .statement("Escolha todas as alternativas corretas")
+                .orderValue(2)
+                .courseId(1L)
+                .type(Type.MULTIPLE_CHOICE.name())
+                .taskOptions(List.of(
+                        createOptionResponse("Opção 1", true),
+                        createOptionResponse("Opção 2", false),
+                        createOptionResponse("Opção 3", true)
                 ))
                 .build();
     }

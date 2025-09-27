@@ -108,7 +108,9 @@ class CourseServiceImplTest {
     @Test
     void publishCourse_should_set_status_and_publishedAt() {
         course.setStatus(Status.BUILDING);
+
         when(courseRepository.findById(1L)).thenReturn(Optional.of(course));
+        when(courseRepository.save(course)).thenReturn(course);
         when(courseMapper.toCourseListItemDTO(course)).thenReturn(CourseDummyFactory.courseListItemDTO());
 
         CourseListItemDTO dto = courseService.publishCourse(1L);
@@ -118,6 +120,7 @@ class CourseServiceImplTest {
         assertEquals("Java Completo", dto.getTitle());
         verify(courseMapper).toCourseListItemDTO(course);
     }
+
 
     @Test
     void getCourseById_should_throw_exception_if_not_found() {

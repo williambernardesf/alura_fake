@@ -4,6 +4,7 @@ import br.com.alura.AluraFake.api.rest.dto.request.task.CreateTaskDTO;
 import br.com.alura.AluraFake.api.rest.dto.response.task.TaskResponseDTO;
 import br.com.alura.AluraFake.domain.entity.course.Course;
 import br.com.alura.AluraFake.domain.entity.task.Task;
+import br.com.alura.AluraFake.dummies.CourseDummyFactory;
 import br.com.alura.AluraFake.persistence.repository.TaskRepository;
 import br.com.alura.AluraFake.application.mapper.TaskMapper;
 import br.com.alura.AluraFake.dummies.TaskDummyFactory;
@@ -37,11 +38,10 @@ class CreateTextTaskServiceTest {
     @BeforeEach
     void setup() {
         createTaskDTO = TaskDummyFactory.createOpenTextTaskGeneric();
-        course = new Course();
-        course.setId(1L);
+        course = CourseDummyFactory.courseWithCourseId();
 
-        task = new Task();
-        taskResponseDTO = TaskDummyFactory.taskResponseDTO();
+        task = TaskDummyFactory.emptyTask();
+        taskResponseDTO = TaskDummyFactory.taskResponseDTOOpenText();
     }
 
     @Test

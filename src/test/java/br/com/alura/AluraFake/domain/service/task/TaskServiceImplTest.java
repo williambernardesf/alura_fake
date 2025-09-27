@@ -105,11 +105,11 @@ class TaskServiceImplTest {
 
         when(courseService.getCourseById(anyLong())).thenReturn(course);
         when(openTextStrategy.createTask(eq(dto), eq(course)))
-                .thenReturn(TaskDummyFactory.taskResponseDTO());
+                .thenReturn(TaskDummyFactory.taskResponseDTOOpenText());
 
         TaskResponseDTO response = taskService.createTask(dto);
 
-        assertEquals(TaskDummyFactory.taskResponseDTO(), response);
+        assertEquals(TaskDummyFactory.taskResponseDTOOpenText(), response);
         verify(taskOrderService).validateAndShiftTasks(course.getId(), dto.getOrder());
         verify(courseValidator).validateStatusBuilding(course.getStatus());
         verify(openTextStrategy).createTask(dto, course);

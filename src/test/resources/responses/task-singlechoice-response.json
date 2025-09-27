@@ -1,0 +1,20 @@
+{
+  "statement": "Escolha a alternativa correta",
+  "orderValue": 3,
+  "type": "SINGLE_CHOICE",
+  "courseId": 1,
+  "taskOptions": [
+    {
+      "taskOption": "Opção 1",
+      "isCorrect": false
+    },
+    {
+      "taskOption": "Opção 2",
+      "isCorrect": true
+    },
+    {
+      "taskOption": "Opção 3",
+      "isCorrect": false
+    }
+  ]
+}

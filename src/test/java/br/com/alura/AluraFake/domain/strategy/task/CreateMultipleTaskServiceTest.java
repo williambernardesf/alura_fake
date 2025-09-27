@@ -4,6 +4,8 @@ import br.com.alura.AluraFake.api.rest.dto.request.task.CreateTaskDTO;
 import br.com.alura.AluraFake.api.rest.dto.response.task.TaskResponseDTO;
 import br.com.alura.AluraFake.domain.entity.course.Course;
 import br.com.alura.AluraFake.domain.entity.task.Task;
+import br.com.alura.AluraFake.domain.entity.taskoption.TaskOption;
+import br.com.alura.AluraFake.dummies.CourseDummyFactory;
 import br.com.alura.AluraFake.persistence.repository.TaskRepository;
 import br.com.alura.AluraFake.application.mapper.TaskMapper;
 import br.com.alura.AluraFake.application.mapper.TaskOptionMapper;
@@ -47,16 +49,15 @@ class CreateMultipleTaskServiceTest {
     @BeforeEach
     void setup() {
         createTaskDTO = TaskDummyFactory.createMultipleChoiceTaskGeneric();
-        course = new Course();
-        course.setId(1L);
+        course = CourseDummyFactory.courseWithCourseId();
 
-        task = new Task();
+        task = TaskDummyFactory.emptyTask();
         taskResponseDTO = TaskDummyFactory.taskResponseDTO();
     }
 
     @Test
     void createTask_should_return_taskResponseDTO() {
-        List taskOptionsEntity = List.of();
+        List<TaskOption> taskOptionsEntity = List.of();
 
         doNothing().when(taskOptionValidator).validateMultipleChoice(createTaskDTO.getTaskOptions(), createTaskDTO.getStatement());
         when(taskOptionMapper.fromGenericToListEntity(createTaskDTO.getTaskOptions())).thenReturn(taskOptionsEntity);
