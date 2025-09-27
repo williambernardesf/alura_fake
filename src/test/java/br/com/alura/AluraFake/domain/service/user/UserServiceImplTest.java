@@ -58,7 +58,7 @@ class UserServiceImplTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
                 () -> userService.newStudent(newUserDTO));
 
-        assertEquals("Email já cadastrado no sistema", exception.getMessage());
+        assertEquals("Email already registered", exception.getMessage());
     }
 
 
