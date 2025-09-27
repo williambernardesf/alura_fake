@@ -16,6 +16,9 @@ public class TaskOrderService {
     public void validateAndShiftTasks(Long courseId, int newOrder) {
         List<Task> tasks = taskRepository.findByCourseIdOrderByOrderValueAsc(courseId);
 
+        System.out.println("📦 Tarefas antes do shift:");
+        tasks.forEach(t -> System.out.println("→ ID: " + t.getId() + ", ordem: " + t.getOrderValue()));
+
         if (newOrder > tasks.size() + 1) {
             throw new IllegalArgumentException(
                     "A sequência da ordem está incorreta. Próxima ordem válida é " + (tasks.size() + 1)
@@ -25,10 +28,17 @@ public class TaskOrderService {
         boolean hasConflict = tasks.stream().anyMatch(t -> t.getOrderValue() >= newOrder);
         if (hasConflict) {
             tasks.stream()
-                 .filter(t -> t.getOrderValue() >= newOrder)
-                 .forEach(t -> t.setOrderValue(t.getOrderValue() + 1));
+                    .filter(t -> t.getOrderValue() >= newOrder)
+                    .forEach(t -> {
+                        int original = t.getOrderValue();
+                        t.setOrderValue(original + 1);
+                        System.out.println("🔁 Task ID " + t.getId() + " deslocada de " + original + " para " + t.getOrderValue());
+                    });
 
             taskRepository.saveAll(tasks);
         }
+
+        System.out.println("✅ Tarefas após o shift:");
+        tasks.forEach(t -> System.out.println("→ ID: " + t.getId() + ", ordem: " + t.getOrderValue()));
     }
 }
