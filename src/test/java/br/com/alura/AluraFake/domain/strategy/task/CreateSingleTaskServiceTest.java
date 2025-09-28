@@ -5,6 +5,7 @@ import br.com.alura.AluraFake.api.rest.dto.response.task.TaskResponseDTO;
 import br.com.alura.AluraFake.domain.entity.course.Course;
 import br.com.alura.AluraFake.domain.entity.task.Task;
 import br.com.alura.AluraFake.domain.entity.taskoption.TaskOption;
+import br.com.alura.AluraFake.domain.service.task.TaskOrderService;
 import br.com.alura.AluraFake.dummies.CourseDummyFactory;
 import br.com.alura.AluraFake.persistence.repository.TaskRepository;
 import br.com.alura.AluraFake.application.mapper.TaskMapper;
@@ -28,6 +29,9 @@ class CreateSingleTaskServiceTest {
 
     @Mock
     private TaskRepository taskRepository;
+
+    @Mock
+    private TaskOrderService taskOrderService;
 
     @Mock
     private TaskMapper taskMapper;
@@ -69,6 +73,7 @@ class CreateSingleTaskServiceTest {
 
         assertEquals(taskResponseDTO, result);
 
+        verify(taskOrderService).validateAndShiftTasks(course.getId(), createTaskDTO.getOrder());
         verify(taskOptionValidator).validateSingleChoice(createTaskDTO.getTaskOptions(), createTaskDTO.getStatement());
         verify(taskOptionMapper).fromGenericToListEntity(createTaskDTO.getTaskOptions());
         verify(taskMapper).fromSingleTaskToEntity(createTaskDTO, course, taskOptionsEntity);

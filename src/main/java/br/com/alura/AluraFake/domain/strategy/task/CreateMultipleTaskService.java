@@ -5,6 +5,7 @@ import br.com.alura.AluraFake.api.rest.dto.response.task.TaskResponseDTO;
 import br.com.alura.AluraFake.application.mapper.TaskMapper;
 import br.com.alura.AluraFake.application.mapper.TaskOptionMapper;
 import br.com.alura.AluraFake.domain.entity.course.Course;
+import br.com.alura.AluraFake.domain.service.task.TaskOrderService;
 import br.com.alura.AluraFake.persistence.repository.TaskRepository;
 import br.com.alura.AluraFake.util.LogUtils;
 import br.com.alura.AluraFake.util.validation.TaskOptionValidator;
@@ -22,6 +23,7 @@ public class CreateMultipleTaskService implements TaskStrategyService {
     private static final Logger logger = LoggerFactory.getLogger(CreateMultipleTaskService.class);
 
     private final TaskRepository taskRepository;
+    private final TaskOrderService taskOrderService;
     private final TaskMapper taskMapper;
     private final TaskOptionMapper taskOptionMapper;
     private final TaskOptionValidator taskOptionValidator;
@@ -38,6 +40,8 @@ public class CreateMultipleTaskService implements TaskStrategyService {
 
         var task = taskMapper.fromMultipleTasktoEntity(createTaskDTO, course, taskOptions);
         taskOptions.forEach(taskOption -> taskOption.setTask(task));
+
+        taskOrderService.validateAndShiftTasks(course.getId(), createTaskDTO.getOrder());
 
         var savedTask = taskRepository.save(task);
         LogUtils.info(logger, this, "createTask", "Task saved with statement: {}, Statement: {}", savedTask.getId(), statement);

@@ -95,4 +95,17 @@ class TaskRepositoryTest {
         assertThat(saved.getId()).isNotNull();
         assertThat(saved.getCourse().getId()).isEqualTo(course.getId());
     }
+
+    @Test
+    void existsByCourseIdAndStatementIgnoreCase__should_return_true_when_statement_exists() {
+        boolean exists = taskRepository.existsByCourseIdAndStatementIgnoreCase(course.getId(), "instalar jdk");
+        assertThat(exists).isTrue();
+    }
+
+    @Test
+    void existsByCourseIdAndStatementIgnoreCase__should_return_false_when_statement_does_not_exist() {
+        boolean exists = taskRepository.existsByCourseIdAndStatementIgnoreCase(course.getId(), "Compilar código");
+        assertThat(exists).isFalse();
+    }
+
 }
