@@ -4,6 +4,7 @@ import br.com.alura.AluraFake.api.rest.dto.request.task.CreateTaskDTO;
 import br.com.alura.AluraFake.api.rest.dto.response.task.TaskResponseDTO;
 import br.com.alura.AluraFake.domain.entity.course.Course;
 import br.com.alura.AluraFake.domain.entity.task.Task;
+import br.com.alura.AluraFake.domain.service.task.TaskOrderService;
 import br.com.alura.AluraFake.dummies.CourseDummyFactory;
 import br.com.alura.AluraFake.persistence.repository.TaskRepository;
 import br.com.alura.AluraFake.application.mapper.TaskMapper;
@@ -23,6 +24,9 @@ class CreateTextTaskServiceTest {
 
     @Mock
     private TaskRepository taskRepository;
+
+    @Mock
+    private TaskOrderService taskOrderService;
 
     @Mock
     private TaskMapper taskMapper;
@@ -54,6 +58,7 @@ class CreateTextTaskServiceTest {
 
         assertEquals(taskResponseDTO, result);
 
+        verify(taskOrderService).validateAndShiftTasks(course.getId(), createTaskDTO.getOrder());
         verify(taskMapper).toEntityWithNoOptions(createTaskDTO, course, null);
         verify(taskRepository).save(task);
         verify(taskMapper).toDto(task);

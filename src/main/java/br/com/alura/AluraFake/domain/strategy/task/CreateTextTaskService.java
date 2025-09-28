@@ -4,6 +4,7 @@ import br.com.alura.AluraFake.api.rest.dto.request.task.CreateTaskDTO;
 import br.com.alura.AluraFake.api.rest.dto.response.task.TaskResponseDTO;
 import br.com.alura.AluraFake.application.mapper.TaskMapper;
 import br.com.alura.AluraFake.domain.entity.course.Course;
+import br.com.alura.AluraFake.domain.service.task.TaskOrderService;
 import br.com.alura.AluraFake.persistence.repository.TaskRepository;
 import br.com.alura.AluraFake.util.LogUtils;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ public class CreateTextTaskService implements TaskStrategyService {
 
     private static final Logger logger = LoggerFactory.getLogger(CreateTextTaskService.class);
 
+    private final TaskOrderService taskOrderService;
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
 
@@ -29,6 +31,8 @@ public class CreateTextTaskService implements TaskStrategyService {
 
         var task = taskMapper.toEntityWithNoOptions(createTaskDTO, course, null);
         LogUtils.info(logger, this, "createTask", "Mapped task entity for statement: {}", statement);
+
+        taskOrderService.validateAndShiftTasks(course.getId(), createTaskDTO.getOrder());
 
         var savedTask = taskRepository.save(task);
         LogUtils.info(logger, this, "createTask", "Task saved with ID: {}, Statement: {}", savedTask.getId(), statement);

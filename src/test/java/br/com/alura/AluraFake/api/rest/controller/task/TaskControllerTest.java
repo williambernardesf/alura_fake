@@ -6,11 +6,15 @@ import br.com.alura.AluraFake.api.rest.dto.request.task.CreateTaskNewTextDTO;
 import br.com.alura.AluraFake.api.rest.dto.request.task.CreateTaskSingleChoiceDTO;
 import br.com.alura.AluraFake.api.rest.dto.response.task.TaskResponseDTO;
 import br.com.alura.AluraFake.application.facade.task.TaskFacade;
+import br.com.alura.AluraFake.configuration.TokenFilterAccess;
+import br.com.alura.AluraFake.domain.service.token.TokenService;
 import br.com.alura.AluraFake.dummies.TaskDummyFactory;
+import br.com.alura.AluraFake.persistence.repository.UserRepository;
 import br.com.alura.AluraFake.util.JsonReader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -23,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(TaskController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class TaskControllerTest {
 
     @Autowired
@@ -30,6 +35,15 @@ class TaskControllerTest {
 
     @MockBean
     private TaskFacade taskFacade;
+
+    @MockBean
+    private TokenService tokenService;
+
+    @MockBean
+    private TokenFilterAccess tokenFilterAccess;
+
+    @MockBean
+    private UserRepository userRepository;
 
     @Autowired
     private ObjectMapper objectMapper;

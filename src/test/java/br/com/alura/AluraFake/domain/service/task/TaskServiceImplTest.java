@@ -8,6 +8,7 @@ import br.com.alura.AluraFake.domain.service.course.CourseServiceImpl;
 import br.com.alura.AluraFake.domain.strategy.task.TaskStrategyService;
 import br.com.alura.AluraFake.dummies.TaskDummyFactory;
 import br.com.alura.AluraFake.util.validation.CourseValidator;
+import br.com.alura.AluraFake.util.validation.TaskValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,10 +25,10 @@ import static org.mockito.Mockito.*;
 class TaskServiceImplTest {
 
     @Mock
-    private TaskOrderService taskOrderService;
+    private CourseValidator courseValidator;
 
     @Mock
-    private CourseValidator courseValidator;
+    private TaskValidator taskValidator;
 
     @Mock
     private CourseServiceImpl courseService;
@@ -51,8 +52,8 @@ class TaskServiceImplTest {
         lenient().when(openTextStrategy.getName()).thenReturn("OPEN_TEXT");
 
         taskService = new TaskServiceImpl(
-                taskOrderService,
                 courseValidator,
+                taskValidator,
                 courseService,
                 List.of(singleChoiceStrategy, multipleChoiceStrategy, openTextStrategy)
         );
@@ -72,8 +73,8 @@ class TaskServiceImplTest {
         TaskResponseDTO response = taskService.createTask(dto);
 
         assertEquals(TaskDummyFactory.taskResponseDTO(), response);
-        verify(taskOrderService).validateAndShiftTasks(course.getId(), dto.getOrder());
         verify(courseValidator).validateStatusBuilding(course.getStatus());
+        verify(taskValidator).validateUniqueStatement(course.getId(), dto.getStatement());
         verify(singleChoiceStrategy).createTask(dto, course);
     }
 
@@ -91,8 +92,8 @@ class TaskServiceImplTest {
         TaskResponseDTO response = taskService.createTask(dto);
 
         assertEquals(TaskDummyFactory.taskResponseDTO(), response);
-        verify(taskOrderService).validateAndShiftTasks(course.getId(), dto.getOrder());
         verify(courseValidator).validateStatusBuilding(course.getStatus());
+        verify(taskValidator).validateUniqueStatement(course.getId(), dto.getStatement());
         verify(multipleChoiceStrategy).createTask(dto, course);
     }
 
@@ -110,8 +111,8 @@ class TaskServiceImplTest {
         TaskResponseDTO response = taskService.createTask(dto);
 
         assertEquals(TaskDummyFactory.taskResponseDTOOpenText(), response);
-        verify(taskOrderService).validateAndShiftTasks(course.getId(), dto.getOrder());
         verify(courseValidator).validateStatusBuilding(course.getStatus());
+        verify(taskValidator).validateUniqueStatement(course.getId(), dto.getStatement());
         verify(openTextStrategy).createTask(dto, course);
     }
 }

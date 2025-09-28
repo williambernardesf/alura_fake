@@ -5,6 +5,7 @@ import br.com.alura.AluraFake.api.rest.dto.response.task.TaskResponseDTO;
 import br.com.alura.AluraFake.domain.service.course.CourseServiceImpl;
 import br.com.alura.AluraFake.domain.strategy.task.TaskStrategyService;
 import br.com.alura.AluraFake.util.validation.CourseValidator;
+import br.com.alura.AluraFake.util.validation.TaskValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +14,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class TaskServiceImpl implements TaskService{
-    private final TaskOrderService taskOrderService;
     private final CourseValidator courseValidator;
+    private final TaskValidator taskValidator;
     private final CourseServiceImpl courseService;
     private final List<TaskStrategyService> strategyServiceList;
 
@@ -22,7 +23,7 @@ public class TaskServiceImpl implements TaskService{
     public TaskResponseDTO createTask(CreateTaskDTO createTaskDTO){
         var course = courseService.getCourseById(createTaskDTO.getCourseId().longValue());
         courseValidator.validateStatusBuilding(course.getStatus());
-        taskOrderService.validateAndShiftTasks(course.getId(), createTaskDTO.getOrder());
+        taskValidator.validateUniqueStatement(course.getId(), createTaskDTO.getStatement());
 
         return this.strategyServiceList.stream()
                 .filter(strategy -> strategy.getName().equalsIgnoreCase(createTaskDTO.getType().toString()))

@@ -10,12 +10,16 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @RequiredArgsConstructor
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserDetailsService, UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -33,6 +37,7 @@ public class UserServiceImpl implements UserService {
 
         var user = userMappper.toUser(newUser);
         LogUtils.info(logger, this, "newStudent", "Saving new user: {}", user.getName());
+        user.setPassword(new BCryptPasswordEncoder().encode(newUser.getPassword()));
 
         var savedUser = userRepository.save(user);
         LogUtils.info(logger, this, "newStudent", "User saved with ID: {}", savedUser.getId());
@@ -57,5 +62,11 @@ public class UserServiceImpl implements UserService {
 
         LogUtils.info(logger, this, "getUserById", "User is instructor: {}", user.getName());
         return userMappper.toUserListItemDto(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmailIgnoreCase(username)
+                .orElseThrow(() -> new UsernameNotFoundException("O usuário não foi encontrado!"));
     }
 }
